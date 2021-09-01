@@ -1,32 +1,33 @@
-private int min_cut_cost_imp(int i, int[] m, int n) {
+private int min_cut_cost_imp(int i, int[] a, int b) {
    int cl = 0, cr = 0;
-   if (m.length == 1) 
-     return n;
+   if (a.length == 1) 
+     return b;
    if (i > 0) {
-      int nl = m[i];
+      int bl = a[i];
       cl = Integer.MAX_VALUE;
-      int[] ml = Arrays.copyOfRange(m, 0, i);
+      int[] al = Arrays.copyOfRange(a, 0, i);
       for (int j=0; j<ml.length; j++) {
-         cl = Math.min(min_cut_cost_imp(ml, nl, j), cl);
+         cl = Math.min(min_cut_cost_imp(al, bl, j), cl);
       }
-   } else if (i < m.length - 1) {
-      int nr = n - m[i];
+   } else if (i < a.length - 1) {
+      int br = b - a[i];
       cr = Integer.MAX_VALUE;
-      int[] mr = Arrays.copyOfRange(m, i + 1, m.length);
-      for (int j=0; j<mr.length; j++) {
-         mr[j] = mr[j] - m[i];
+      int[] ar = Arrays.copyOfRange(a, i + 1, a.length);
+      for (int j=0; j<ar.length; j++) {
+         ar[j] = ar[j] - a[i];
       }
-      for (int j=0; j<mr.length; j++) {
-         cr = Math.min(min_cut_cost_imp(mr, nr, j), cr);
+      for (int j=0; j<ar.length; j++) {
+         cr = Math.min(min_cut_cost_imp(ar, br, j), cr);
       }
    }
-   return n + cl + cr;
+   
+   return b + cr + cl;
 }
 
-public int min_cut_cost(int[] m, int n) {
-   int cost = n * m.length;
-   for (int i=0; i<m.length; i++) {
-      cost = Math.min(min_cut_cost_imp(m, n, i), cost);
+public int min_cut_cost(int[] a, int b) {
+   int cost = b * a.length;
+   for (int i=0; i<a.length; i++) {
+      cost = Math.min(min_cut_cost_imp(a, b, i), cost);
    }
    return cost;
 }
