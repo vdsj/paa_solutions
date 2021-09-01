@@ -3,16 +3,16 @@ private int min_cut_cost_imp(int i, int[] m, int n) {
    if (m.length == 1) 
      return n;
    if (i > 0) {
+      int nl = m[i];
       cl = Integer.MAX_VALUE;
       int[] ml = Arrays.copyOfRange(m, 0, i);
-      int nl = m[i];
       for (int j=0; j<ml.length; j++) {
          cl = Math.min(min_cut_cost_imp(ml, nl, j), cl);
       }
    } else if (i < m.length - 1) {
+      int nr = n - m[i];
       cr = Integer.MAX_VALUE;
       int[] mr = Arrays.copyOfRange(m, i + 1, m.length);
-      int nr = n - m[i];
       for (int j=0; j<mr.length; j++) {
          mr[j] = mr[j] - m[i];
       }
